@@ -2,7 +2,7 @@ import path from "path";
 import rimraf from "rimraf";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonJs from "@rollup/plugin-commonjs";
-import esbuild, { minify } from "rollup-plugin-esbuild";
+import esbuild from "rollup-plugin-esbuild";
 import dts from "rollup-plugin-dts";
 
 const commonPlugins = [
@@ -20,11 +20,8 @@ const config = [
   {
     input,
     output: {
-      file: getOutput("index.cjs.js"),
+      file: getOutput("index.js"),
       format: "cjs",
-      globals: {
-        "vue-demi": "VueDemi",
-      },
     },
     external(id) {
       return /^vue/.test(id);
@@ -34,33 +31,13 @@ const config = [
   {
     input,
     output: {
-      file: getOutput("index.es.js"),
+      file: getOutput("index.mjs"),
       format: "es",
-      globals: {
-        "vue-demi": "VueDemi",
-      },
     },
     external(id) {
       return /^vue/.test(id);
     },
     plugins: commonPlugins,
-  },
-  {
-    input,
-    output: {
-      file: getOutput("index.iife.min.js"),
-      name: "CharrueComposable",
-      format: "iife",
-      extend: true,
-
-      globals: {
-        "vue-demi": "VueDemi",
-      },
-    },
-    external(id) {
-      return /^vue/.test(id);
-    },
-    plugins: [...commonPlugins, minify()],
   },
   {
     input: "src/index.ts",
@@ -70,7 +47,7 @@ const config = [
         file: getOutput("index.d.ts"),
       },
     ],
-    plugins: [dts()],
+    plugins: [ dts() ],
   },
 ];
 

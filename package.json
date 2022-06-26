@@ -1,24 +1,43 @@
 {
-  "version": "0.0.1",
   "name": "@charrue/element-plus-test-helper",
-  "description": "",
-  "main": "./dist/index.cjs.js",
-  "module": "dist/index.es.js",
-  "unpkg": "./dist/index.iife.min.js",
-  "jsdelivr": "./dist/index.iife.min.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "prepare": "husky install",
-    "build": "rollup -c",
-    "lint": "eslint --fix",
-    "test": "vitest"
-  },
+  "version": "0.0.1",
+  "description": "Element Plus的测试辅助工具集",
   "keywords": [
     "test",
+    "test-helper",
     "vitest",
     "element-plus",
     "charrue"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/charrue/element-plus-test-helper"
+  },
+  "license": "MIT",
+  "main": "./dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "lint": "eslint --fix",
+    "prepare": "husky install",
+    "test": "vitest"
+  },
+  "lint-staged": {
+    "*.ts": "npm run lint"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@vue/test-utils": "^2.0.0-rc.21"
+  },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.3",
     "@charrue/eslint-config-base": "latest",
@@ -47,17 +66,5 @@
     "vite": "^2.8.1",
     "vitest": "^0.13.1",
     "vue": "^3.2.33"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "lint-staged": {
-    "*.ts": "npm run lint"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "@vue/test-utils": "^2.0.0-rc.21"
   }
 }
