@@ -1,8 +1,7 @@
-import { describe, expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import { ElInput } from "element-plus";
 import type { ComponentOptionsWithoutProps } from "vue";
-import { createElInputTestUtils } from "./index";
+import { ElInputTestHelper } from "./index";
 
 const createElInputInstance = (options: ComponentOptionsWithoutProps = {}) => {
   Object.assign(options, {
@@ -14,10 +13,10 @@ const createElInputInstance = (options: ComponentOptionsWithoutProps = {}) => {
   return wrapper;
 };
 
-describe("createElInputTestUtils", () => {
+describe("ElInputTestHelper", () => {
   test("getValue", () => {
     const wrapper = createElInputInstance({
-      template: `<el-input v-model="inputValue"></el-input>`,
+      template: `<el-input class="foo" v-model="inputValue"></el-input>`,
       data() {
         return {
           inputValue: "Hello World",
@@ -25,13 +24,13 @@ describe("createElInputTestUtils", () => {
       },
     });
 
-    const { getValue } = createElInputTestUtils(wrapper);
-    expect(getValue()).toBe("Hello World");
+    const { getValue } = new ElInputTestHelper(wrapper);
+    expect(getValue(".foo")).toBe("Hello World");
   });
 
-  test("setValue", () => {
+  test("setValue", async () => {
     const wrapper = createElInputInstance({
-      template: `<el-input v-model="inputValue"></el-input>`,
+      template: `<el-input class="foo" v-model="inputValue"></el-input>`,
       data() {
         return {
           inputValue: "",
@@ -39,30 +38,15 @@ describe("createElInputTestUtils", () => {
       },
     });
 
-    const { setValue, getValue } = createElInputTestUtils(wrapper);
+    const { setValue, getValue } = new ElInputTestHelper(wrapper, ".foo");
     expect(getValue()).toBe("");
-    setValue("Hello World");
+    await setValue("Hello World");
     expect(getValue()).toBe("Hello World");
   });
 
-  // test("getElInputVm", () => {
-  //   const wrapper = createElInputInstance({
-  //     template: `<el-input v-model="inputValue" clearable></el-input>`,
-  //     data() {
-  //       return {
-  //         inputValue: "Hello World",
-  //       };
-  //     },
-  //   });
-
-  //   const { getElInputVm } = createElInputTestUtils(wrapper);
-  //   expect(getElInputVm().value).toBe("Hello World");
-  //   expect(getElInputVm().clearable).toBe(true);
-  // });
-
   test("clear", async () => {
     const wrapper = createElInputInstance({
-      template: `<el-input v-model="inputValue" clearable></el-input>`,
+      template: `<el-input class="foo" v-model="inputValue" clearable></el-input>`,
       data() {
         return {
           inputValue: "Hello World",
@@ -70,9 +54,37 @@ describe("createElInputTestUtils", () => {
       },
     });
 
-    const { clear, getValue } = createElInputTestUtils(wrapper);
+    const { clear, getValue } = new ElInputTestHelper(wrapper, ".foo");
     expect(getValue()).toBe("Hello World");
     await clear();
     expect(getValue()).toBe("");
+  });
+
+  test("focus & blur", async () => {
+    const handleFocus = vi.fn();
+    const handleBlur = vi.fn();
+
+    const wrapper = createElInputInstance({
+      template: `<el-input class="foo" modelValue="inputValue" @focus="handleFocus" @blur="handleBlur"></el-input>`,
+      data() {
+        return {
+          inputValue: "Hello World",
+        };
+      },
+      methods: {
+        handleFocus,
+        handleBlur,
+      },
+    });
+
+    const { focus, blur } = new ElInputTestHelper(wrapper, ".foo");
+    expect(handleFocus).not.toHaveBeenCalled();
+    expect(handleBlur).not.toHaveBeenCalled();
+
+    await focus();
+    expect(handleFocus).toHaveBeenCalled();
+
+    await blur();
+    expect(handleBlur).toHaveBeenCalled();
   });
 });

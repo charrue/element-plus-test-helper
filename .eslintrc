@@ -9,6 +9,13 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "no-console": "off",
+    "no-plusplus": "off",
+    "no-param-reassign": "off",
+    "no-magic-numbers": "off",
+    "prefer-destructuring": "off",
+    "no-useless-constructor": "off",
+    "class-methods-use-this": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/indent": ["error", 2],
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "off",

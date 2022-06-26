@@ -1,5 +1,6 @@
 {
   "version": "0.0.1",
+  "name": "@charrue/element-plus-test-helper",
   "description": "",
   "main": "./dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -13,8 +14,10 @@
     "test": "vitest"
   },
   "keywords": [
-    "typescript",
-    "rollup"
+    "test",
+    "vitest",
+    "element-plus",
+    "charrue"
   ],
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.3",
@@ -27,12 +30,14 @@
     "@typescript-eslint/parser": "^5.5.0",
     "@vue/compiler-sfc": "^3.2.33",
     "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
     "element-plus": "^2.1.11",
     "esbuild": "^0.14.1",
     "eslint": "^8.3.0",
     "husky": "^7.0.4",
-    "jsdom": "^19.0.0",
+    "jsdom": "16.4.0",
     "lint-staged": "^12.1.2",
+    "resize-observer-polyfill": "^1.5.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.60.2",
     "rollup-plugin-dts": "^4.0.1",
@@ -40,7 +45,7 @@
     "tslib": "^2.3.1",
     "typescript": "^4.5.2",
     "vite": "^2.8.1",
-    "vitest": "^0.3.2",
+    "vitest": "^0.13.1",
     "vue": "^3.2.33"
   },
   "config": {
