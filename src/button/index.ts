@@ -30,7 +30,7 @@ export class ElButtonTestHelper extends BaseTestHelper {
    */
   getLoading = (selector?: string) => {
     const elButtonWrapper = this.getElButtonWrapper(selector);
-    return elButtonWrapper?.props("loading");
+    return elButtonWrapper?.classes("is-loading");
   };
 
   /**
@@ -40,7 +40,7 @@ export class ElButtonTestHelper extends BaseTestHelper {
    */
   getDisabled = (selector?: string) => {
     const elButtonWrapper = this.getElButtonWrapper(selector);
-    return elButtonWrapper?.props("disabled");
+    return elButtonWrapper?.classes("is-disabled");
   };
 
   /**

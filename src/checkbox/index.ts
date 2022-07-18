@@ -13,14 +13,14 @@ export class CheckboxTestUtils extends BaseTestHelper {
     const checkboxGroupWrapper = this.getCheckboxGroupWrapper(selector);
     const wrappers = checkboxGroupWrapper
       .findAllComponents({ name: "ElCheckbox" }).concat(checkboxGroupWrapper.findAllComponents({ name: "ElCheckboxButton" }));
-    return wrappers.filter((item) => item.classes("is-checked"));
+    return wrappers.filter((item: VueWrapper<any>) => item.classes("is-checked"));
   };
 
   getGroupDisabled = (selector?: string) => {
     const checkboxGroupWrapper = this.getCheckboxGroupWrapper(selector);
     const wrappers = checkboxGroupWrapper
       .findAllComponents({ name: "ElCheckbox" }).concat(checkboxGroupWrapper.findAllComponents({ name: "ElCheckboxButton" }));
-    return wrappers.filter((item) => item.classes("is-disabled"));
+    return wrappers.filter((item: VueWrapper<any>) => item.classes("is-disabled"));
   };
 
   getCheckboxLabel = (wrapper: VueWrapper<any>) => wrapper.find(".el-checkbox__label").text();

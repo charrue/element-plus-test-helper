@@ -1,6 +1,7 @@
 /* eslint-disable max-statements */
 import { rAF } from "../utils/tick";
 import { BaseTestHelper } from "../BaseTestHelper";
+import type { VueWrapper } from "@vue/test-utils";
 import {
   getDataObj,
   getVisibleDatePickerPanel,
@@ -10,7 +11,7 @@ import {
 } from "./helper";
 
 export class ElDatePickerTestHelper extends BaseTestHelper {
-  public displayName: string | undefined = "ElDatePicker";
+  public displayName = "ElDatePicker";
 
   /**
    * @description 获取`.el-date-editor`的wrapper
@@ -25,11 +26,12 @@ export class ElDatePickerTestHelper extends BaseTestHelper {
     return datePickerWrapper;
   };
 
-  getDatePickerComponentWrapper = (selector?: string) => {
+  getDatePickerComponentWrapper = (selector?: string): VueWrapper<any> | undefined => {
     selector = this.checkSelector(selector);
 
-    const allComponentWrapper = this.wrapper.findAllComponents({ name: "ElDatePicker" });
-    return allComponentWrapper.find((t) => t.find(selector!).exists())!;
+    const allComponentWrapper = (this.wrapper as any).findAllComponents({ name: "ElDatePicker" });
+    return allComponentWrapper
+      .find((t: any) => t.find(selector!).exists())! as VueWrapper<any> | undefined;
   };
 
   focus = async (selector?: string) => {
@@ -49,7 +51,7 @@ export class ElDatePickerTestHelper extends BaseTestHelper {
     selector = this.checkSelector(selector);
 
     const datePickerComponentWrapper = this.getDatePickerComponentWrapper(selector);
-    return datePickerComponentWrapper.props("modelValue");
+    return datePickerComponentWrapper?.props("modelValue");
   };
 
   selectYear = async () => {
@@ -65,7 +67,7 @@ export class ElDatePickerTestHelper extends BaseTestHelper {
 
     const datePickerComponentWrapper = this.getDatePickerComponentWrapper(selector);
 
-    if (datePickerComponentWrapper.props("type") !== "date") {
+    if (datePickerComponentWrapper?.props("type") !== "date") {
       this.error(`in ${selector} el-date-picker type is not date, please set type to date`);
     }
 
@@ -117,13 +119,13 @@ export class ElDatePickerTestHelper extends BaseTestHelper {
 
     const datePickerComponentWrapper = this.getDatePickerComponentWrapper(selector);
 
-    if (datePickerComponentWrapper.props("type") !== "daterange") {
+    if (datePickerComponentWrapper?.props("type") !== "daterange") {
       this.error(`in ${selector} el-date-picker type is not daterange, please set type to daterange`);
     }
 
-    const rangeInputWrapper = datePickerComponentWrapper.find(".el-date-editor .el-range-input");
-    await rangeInputWrapper.trigger("blur");
-    await rangeInputWrapper.trigger("focus");
+    const rangeInputWrapper = datePickerComponentWrapper?.find(".el-date-editor .el-range-input");
+    await rangeInputWrapper?.trigger("blur");
+    await rangeInputWrapper?.trigger("focus");
     await rAF();
 
     try {
@@ -168,8 +170,8 @@ export class ElDatePickerTestHelper extends BaseTestHelper {
     selector = this.checkSelector(selector);
 
     const componentWrapper = this.getDatePickerComponentWrapper(selector);
-    if (componentWrapper.props("clearable")) {
-      await componentWrapper.find(".el-input__icon.clear-icon").trigger("click");
+    if (componentWrapper?.props("clearable")) {
+      await componentWrapper?.find(".el-input__icon.clear-icon").trigger("click");
       return true;
     }
     this.error(`in ${selector} el-date-picker clearable is false`);

@@ -3,13 +3,13 @@ import domEvents, {
   DomEvent,
   DomEventName,
   DomEventNameWithModifier,
-  KeyName,
   Modifier,
   ignorableKeyModifiers,
   systemKeyModifiers,
   mouseKeyModifiers,
   keyCodesByKeyName,
 } from "./dom-events";
+import type { KeyName } from "./dom-events";
 
 interface TriggerOptions {
   code?: string
